@@ -15,14 +15,14 @@ resource "random_shuffle" "az" {
 resource "aws_subnet" "public" {
   count = var.availability_zone_count
   vpc_id = aws_vpc._.id
-  cidr_block = cidrsubnet(aws_vpc._.cidr_block, ceil(log(var.availability_zone_count*2)), 2)), count.index)
+  cidr_block = cidrsubnet(aws_vpc._.cidr_block, ceil(log(var.availability_zone_count*2), 2), count.index)
   availability_zone = random_shuffle.az.result[count.index]
 }
 
 resource "aws_subnet" "private" {
   count = var.availability_zone_count
   vpc_id = aws_vpc._.id
-  cidr_block = cidrsubnet(aws_vpc._.cidr_block, ceil(log(var.availability_zone_count*2)), 2)), count.index + var.availability_zone_count)
+  cidr_block = cidrsubnet(aws_vpc._.cidr_block, ceil(log(var.availability_zone_count*2), 2), count.index + var.availability_zone_count)
   availability_zone = random_shuffle.az.result[count.index]
 }
 
